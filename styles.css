@@ -1,0 +1,366 @@
+@font-face {
+    font-family: 'Jeko-Bold Regular';
+    src: url('jeko-bold.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jeko-SemiBold Regular';
+    src: url('jeko-semibold.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Jeko-ExtraBold Regular';
+    src: url('jeko-extrabold.woff2') format('woff2');
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #26547c;
+    --title-color: #F4FEC1;
+    --description-color: #FBFAF8;
+    --white: #ffffff;
+    --button-bg: #009f3b;
+    --ticker-dot: #ffffff;
+}
+
+body {
+    font-family: 'Jeko-SemiBold Regular', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--white);
+    line-height: 1.2;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+
+/* Logo Section */
+.logo-section {
+    padding: 40px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.logo {
+    width: 101px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+/* Hero Section */
+.hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px;
+    background-color: var(--bg-color);
+}
+
+.hero-content {
+    max-width: 1400px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0;
+}
+
+.text-content {
+    flex: 1 0 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    justify-content: center;
+}
+
+.main-title {
+    font-family: 'Jeko-Bold Regular', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 110%;
+    color: var(--title-color);
+    width: 88%;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.main-description {
+    font-family: 'Jeko-SemiBold Regular', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--description-color);
+    width: 84%;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.cta-text {
+    font-family: 'Jeko-SemiBold Regular', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+    width: 84%;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--button-bg);
+    border-radius: 12px;
+    padding: 20px 24px 16px;
+    text-decoration: none;
+    width: min-content;
+    transition: transform 0.2s ease;
+    will-change: transform;
+}
+
+.btn-therapist,
+.btn-patient {
+    font-family: 'Jeko-ExtraBold Regular', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 100%;
+    text-align: center;
+    color: var(--white);
+    white-space: pre;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.vector-image {
+    flex: none;
+    width: 46%;
+    aspect-ratio: 2.1401869158878504 / 1;
+    height: 214px;
+    position: relative;
+}
+
+.vector-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    border-radius: inherit;
+}
+
+/* Ticker Section */
+.ticker-section {
+    background-color: var(--bg-color);
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+    overflow: hidden;
+    padding: 0;
+    height: 67px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ticker-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%);
+}
+
+.ticker {
+    display: flex;
+    white-space: nowrap;
+    will-change: transform;
+}
+
+.ticker-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 24px;
+    padding: 10px 0;
+    list-style: none;
+    margin: 0;
+}
+
+.ticker-item {
+    font-family: 'Jeko-ExtraBold Regular', sans-serif;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--white);
+    white-space: pre;
+    flex-shrink: 0;
+}
+
+.ticker-dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--ticker-dot);
+    border-radius: 100px;
+    flex-shrink: 0;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.ticker {
+    animation: scroll 30s linear infinite;
+}
+
+/* Responsive Design */
+@media (min-width: 810px) and (max-width: 1199px) {
+    .logo-section {
+        padding: 40px 62px;
+    }
+
+    .hero {
+        padding: 62px;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 80px;
+    }
+
+    .text-content {
+        flex: none;
+        width: 100%;
+    }
+
+    .main-title {
+        font-size: 50px;
+    }
+
+    .main-description {
+        font-size: 20px;
+    }
+
+    .cta-text {
+        font-size: 20px;
+    }
+
+    .vector-image {
+        width: 100%;
+        height: 321px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 809px) {
+    .logo-section {
+        padding: 20px;
+    }
+
+    .hero {
+        padding: 40px 20px;
+        min-height: auto;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+
+    .text-content {
+        flex: none;
+        width: 100%;
+        gap: 32px;
+    }
+
+    .main-title {
+        font-size: 50px;
+        width: 100%;
+    }
+
+    .main-description {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .cta-text {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .buttons-container {
+        gap: 24px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .vector-image {
+        width: 100%;
+        height: 164px;
+    }
+
+    .ticker-item {
+        font-size: 24px;
+    }
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+.btn:focus {
+    outline: 3px solid var(--title-color);
+    outline-offset: 2px;
+}
