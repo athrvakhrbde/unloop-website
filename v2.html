@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unloop v2</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .v2-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 40px;
+            background-color: var(--bg-color);
+        }
+
+        .graph-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background-color: var(--bg-color);
+        }
+
+        .graph-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            margin: 40px 0;
+        }
+
+        .graph-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .graph-line {
+            fill: none;
+            stroke: var(--title-color);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .graph-point {
+            fill: var(--title-color);
+            cursor: pointer;
+            transition: r 0.3s ease;
+        }
+
+        .graph-point:hover {
+            r: 10;
+        }
+
+        .graph-label {
+            font-family: 'Jeko-Bold Regular', sans-serif;
+            font-size: 24px;
+            fill: var(--white);
+            text-anchor: middle;
+            dominant-baseline: middle;
+        }
+
+        .placeholder-label {
+            font-family: 'Jeko-SemiBold Regular', sans-serif;
+            font-size: 18px;
+            fill: var(--description-color);
+            text-anchor: middle;
+        }
+
+        .x-axis-label {
+            font-family: 'Jeko-SemiBold Regular', sans-serif;
+            font-size: 16px;
+            fill: var(--description-color);
+            text-anchor: middle;
+        }
+
+        @media (max-width: 809px) {
+            .graph-container {
+                padding: 40px 20px;
+            }
+
+            .graph-wrapper {
+                height: 400px;
+            }
+
+            .graph-label {
+                font-size: 20px;
+            }
+
+            .placeholder-label {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo Section -->
+        <header class="logo-section">
+            <div class="logo-container">
+                <a href="/" style="text-decoration: none;">
+                    <svg width="101" height="32" viewBox="-1 -1 101 32" fill="none" class="logo">
+                        <path d="M6.84043 23.3736C3.28093 23.3736 0 20.7692 0 16.3846V5.6044H4.02378V15.2637C4.02378 17.8022 5.6952 19.3846 7.64518 19.3846C10.0904 19.3846 11.6999 17.2747 11.6999 14.6044V5.6044H15.7237V23.0769H11.6999V21.0989C10.6475 22.3516 9.03803 23.3736 6.84043 23.3736Z" fill="#F4FEC1"/>
+                        <path d="M23.0371 23.0769H19.0133V5.6044H23.0371V7.58242C24.0895 6.2967 25.699 5.30769 27.8966 5.30769C31.4561 5.30769 34.737 7.91209 34.737 12.2967V23.0769H30.7132V13.4176C30.7132 10.8791 29.0418 9.2967 27.0918 9.2967C24.6466 9.2967 23.0371 11.4066 23.0371 14.0769V23.0769Z" fill="#F4FEC1"/>
+                        <path d="M40.6634 23.0769H38.0325V0H40.6634V23.0769Z" fill="#F4FEC1"/>
+                        <path d="M52.1181 23.3407C47.4443 23.3407 43.7301 19.2527 43.7301 14.3077C43.7301 9.36264 47.4443 5.30769 52.1181 5.30769C56.8228 5.30769 60.5371 9.42857 60.5371 14.3077C60.5371 19.2527 56.7919 23.3407 52.1181 23.3407ZM52.1181 20.7363C55.4609 20.7363 58.0609 17.8352 58.0609 14.3077C58.0609 10.7802 55.43 7.87912 52.1181 7.87912C48.8062 7.87912 46.2062 10.7802 46.2062 14.3077C46.2062 17.9011 48.8372 20.7363 52.1181 20.7363Z" fill="#F4FEC1"/>
+                        <path d="M71.04 23.3407C66.3663 23.3407 62.652 19.2527 62.652 14.3077C62.652 9.36264 66.3663 5.30769 71.04 5.30769C75.7448 5.30769 79.459 9.42857 79.459 14.3077C79.459 19.2527 75.7138 23.3407 71.04 23.3407ZM71.04 20.7363C74.3829 20.7363 76.9829 17.8352 76.9829 14.3077C76.9829 10.7802 74.3519 7.87912 71.04 7.87912C67.7282 7.87912 65.1282 10.7802 65.1282 14.3077C65.1282 17.9011 67.7591 20.7363 71.04 20.7363Z" fill="#F4FEC1"/>
+                        <path d="M84.7001 30H82.0692V5.6044H84.7001V8.73626C85.9382 6.72528 88.1048 5.30769 90.7667 5.30769C95.3167 5.30769 99 9.39561 99 14.3077C99 19.3516 95.3167 23.3407 90.7667 23.3407C88.1358 23.3407 85.9382 21.9231 84.7001 19.8791V30ZM90.5501 20.8022C93.8619 20.8022 96.4929 17.9011 96.4929 14.3077C96.4929 10.7802 93.9238 7.87912 90.5501 7.87912C87.2382 7.87912 84.5453 10.8132 84.5453 14.3077C84.5453 17.8352 87.2072 20.8022 90.5501 20.8022Z" fill="#F4FEC1"/>
+                    </svg>
+                </a>
+            </div>
+        </header>
+
+        <!-- Graph Section -->
+        <section class="v2-container">
+            <div class="graph-container">
+                <div class="graph-wrapper">
+                    <svg class="graph-svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+                        <!-- Grid lines (optional) -->
+                        <defs>
+                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#F4FEC1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#F4FEC1;stop-opacity:0.8" />
+                            </linearGradient>
+                        </defs>
+
+                        <!-- Graph line connecting the peaks -->
+                        <path class="graph-line" d="M 100 400 Q 200 350 300 300 T 500 200 T 700 120 T 900 80" 
+                              stroke="url(#lineGradient)" />
+
+                        <!-- Peak 1 -->
+                        <circle class="graph-point" cx="100" cy="400" r="8" />
+                        <text class="graph-label" x="100" y="380">1</text>
+                        <text class="placeholder-label" x="100" y="420">Placeholder 1</text>
+
+                        <!-- Peak 2 -->
+                        <circle class="graph-point" cx="300" cy="300" r="8" />
+                        <text class="graph-label" x="300" y="280">2</text>
+                        <text class="placeholder-label" x="300" y="320">Placeholder 2</text>
+
+                        <!-- Peak 3 -->
+                        <circle class="graph-point" cx="500" cy="200" r="8" />
+                        <text class="graph-label" x="500" y="180">3</text>
+                        <text class="placeholder-label" x="500" y="220">Placeholder 3</text>
+
+                        <!-- Peak 4 -->
+                        <circle class="graph-point" cx="700" cy="120" r="8" />
+                        <text class="graph-label" x="700" y="100">4</text>
+                        <text class="placeholder-label" x="700" y="140">Placeholder 4</text>
+
+                        <!-- Peak 5 -->
+                        <circle class="graph-point" cx="900" cy="80" r="8" />
+                        <text class="graph-label" x="900" y="60">5</text>
+                        <text class="placeholder-label" x="900" y="100">Placeholder 5</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
