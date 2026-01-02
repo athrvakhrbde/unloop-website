@@ -426,7 +426,7 @@ html {
 .anmol-text p {
     font-family: 'Jeko-SemiBold Regular', sans-serif;
     font-size: 18px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.6;
     color: var(--description-color);
     word-break: break-word;
