@@ -12,85 +12,305 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 100px 40px;
-            background-color: var(--bg-color);
+            padding: 60px 40px 100px;
+            background: linear-gradient(180deg, var(--bg-color) 0%, #1e3d5c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .v2-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(244, 254, 193, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(244, 254, 193, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
 
         .graph-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 60px 40px;
-            background-color: var(--bg-color);
+            background-color: transparent;
+            position: relative;
+            z-index: 1;
+        }
+
+        .graph-title {
+            font-family: 'Jeko-Bold Regular', sans-serif;
+            font-size: 52px;
+            color: var(--title-color);
+            text-align: center;
+            margin: 0 0 16px 0;
+            opacity: 0;
+            animation: fadeInTitle 0.8s ease-out forwards;
+            filter: drop-shadow(0 2px 8px rgba(244, 254, 193, 0.3));
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+
+        .graph-subtitle {
+            font-family: 'Jeko-SemiBold Regular', sans-serif;
+            font-size: 20px;
+            color: var(--description-color);
+            text-align: center;
+            margin: 0 0 80px 0;
+            opacity: 0;
+            animation: fadeInTitle 0.8s ease-out 0.2s forwards;
+            line-height: 1.4;
         }
 
         .graph-wrapper {
             position: relative;
             width: 100%;
-            height: 500px;
-            margin: 40px 0;
+            height: 600px;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .graph-svg {
             width: 100%;
             height: 100%;
+            max-width: 100%;
+            filter: drop-shadow(0 8px 32px rgba(244, 254, 193, 0.15));
+        }
+
+        @keyframes fadeInTitle {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .graph-area {
+            fill: url(#areaGradient);
+            opacity: 0.4;
+            animation: fadeInArea 1.5s ease-out;
         }
 
         .graph-line {
             fill: none;
-            stroke: var(--title-color);
-            stroke-width: 4;
+            stroke: url(#lineGradient);
+            stroke-width: 6;
             stroke-linecap: round;
             stroke-linejoin: round;
+            filter: drop-shadow(0 0 12px rgba(244, 254, 193, 0.8));
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawLine 2.5s ease-out forwards;
         }
 
         .graph-point {
-            fill: var(--title-color);
+            fill: url(#pointGradient);
             cursor: pointer;
-            transition: r 0.3s ease;
+            filter: drop-shadow(0 0 16px rgba(244, 254, 193, 0.9));
+            opacity: 0;
+            animation: fadeInPoint 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .graph-point:hover {
-            r: 10;
+            r: 16;
+            filter: drop-shadow(0 0 24px rgba(244, 254, 193, 1));
+            transform-origin: center;
         }
 
-        .graph-label {
-            font-family: 'Jeko-Bold Regular', sans-serif;
-            font-size: 24px;
-            fill: var(--white);
-            text-anchor: middle;
-            dominant-baseline: middle;
+        .graph-point-outer {
+            fill: none;
+            stroke: var(--title-color);
+            stroke-width: 2.5;
+            opacity: 0.5;
+            r: 14;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.5;
+                r: 14;
+            }
+            50% {
+                opacity: 0.8;
+                r: 16;
+            }
         }
 
         .placeholder-label {
-            font-family: 'Jeko-SemiBold Regular', sans-serif;
-            font-size: 18px;
-            fill: var(--description-color);
+            font-family: 'Jeko-Bold Regular', sans-serif;
+            font-size: 24px;
+            fill: var(--title-color);
             text-anchor: middle;
+            dominant-baseline: middle;
+            filter: drop-shadow(0 2px 12px rgba(244, 254, 193, 0.9));
+            opacity: 0;
+            animation: fadeInLabel 0.7s ease-out forwards;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
-        .x-axis-label {
+        .graph-point:hover ~ .placeholder-label {
+            filter: drop-shadow(0 4px 16px rgba(244, 254, 193, 1));
+            font-size: 26px;
+            fill: #B8E986;
+        }
+
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes fadeInArea {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes fadeInPoint {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInLabel {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .graph-point:nth-of-type(1) { animation-delay: 0.3s; }
+        .graph-point:nth-of-type(2) { animation-delay: 0.5s; }
+        .graph-point:nth-of-type(3) { animation-delay: 0.7s; }
+        .graph-point:nth-of-type(4) { animation-delay: 0.9s; }
+        
+        .placeholder-label:nth-of-type(1) { animation-delay: 0.4s; }
+        .placeholder-label:nth-of-type(2) { animation-delay: 0.6s; }
+        .placeholder-label:nth-of-type(3) { animation-delay: 0.8s; }
+        .placeholder-label:nth-of-type(4) { animation-delay: 1.0s; }
+
+        /* CTA Button */
+        .v2-container .logo-section {
+            position: relative;
+            justify-content: space-between;
+        }
+
+        .v2-container .logo-container {
+            flex: 0 0 auto;
+        }
+
+        .cta-button {
             font-family: 'Jeko-SemiBold Regular', sans-serif;
             font-size: 16px;
-            fill: var(--description-color);
-            text-anchor: middle;
+            font-weight: 600;
+            color: var(--title-color);
+            background-color: transparent;
+            border: 2px solid var(--title-color);
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.9;
+        }
+
+        .cta-button:hover {
+            background-color: rgba(244, 254, 193, 0.1);
+            border-color: var(--title-color);
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        @media (min-width: 810px) and (max-width: 1199px) {
+            .v2-container {
+                padding: 50px 30px 80px;
+            }
+
+            .graph-container {
+                padding: 50px 30px;
+            }
+
+            .graph-title {
+                font-size: 42px;
+            }
+
+            .graph-subtitle {
+                font-size: 18px;
+                margin-bottom: 60px;
+            }
+
+            .graph-wrapper {
+                height: 550px;
+            }
         }
 
         @media (max-width: 809px) {
+            .v2-container {
+                padding: 40px 20px 60px;
+                min-height: auto;
+            }
+
             .graph-container {
-                padding: 40px 20px;
+                padding: 30px 20px;
+            }
+
+            .graph-title {
+                font-size: 32px;
+                margin-bottom: 12px;
+                letter-spacing: -0.3px;
+            }
+
+            .graph-subtitle {
+                font-size: 16px;
+                margin-bottom: 40px;
             }
 
             .graph-wrapper {
                 height: 400px;
-            }
-
-            .graph-label {
-                font-size: 20px;
+                padding: 20px 10px;
             }
 
             .placeholder-label {
                 font-size: 16px;
+            }
+
+            .cta-button {
+                right: 20px;
+                font-size: 14px;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -111,49 +331,74 @@
                     </svg>
                 </a>
             </div>
+            <a href="#" class="cta-button">Join Cohort</a>
         </header>
 
         <!-- Graph Section -->
         <section class="v2-container">
             <div class="graph-container">
+                <h1 class="graph-title">A comprehensive approach to ADHD</h1>
                 <div class="graph-wrapper">
-                    <svg class="graph-svg" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
-                        <!-- Grid lines (optional) -->
+                    <svg class="graph-svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
                         <defs>
-                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <!-- Gradient for the line -->
+                            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                                 <stop offset="0%" style="stop-color:#F4FEC1;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#F4FEC1;stop-opacity:0.8" />
+                                <stop offset="25%" style="stop-color:#B8E986;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#9FD85A;stop-opacity:1" />
+                                <stop offset="75%" style="stop-color:#B8E986;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#F4FEC1;stop-opacity:1" />
                             </linearGradient>
+                            
+                            <!-- Gradient for area fill -->
+                            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#F4FEC1;stop-opacity:0.5" />
+                                <stop offset="50%" style="stop-color:#B8E986;stop-opacity:0.3" />
+                                <stop offset="100%" style="stop-color:#26547C;stop-opacity:0.15" />
+                            </linearGradient>
+                            
+                            <!-- Gradient for points -->
+                            <radialGradient id="pointGradient" cx="50%" cy="50%">
+                                <stop offset="0%" style="stop-color:#FFFFFF;stop-opacity:1" />
+                                <stop offset="40%" style="stop-color:#F4FEC1;stop-opacity:1" />
+                                <stop offset="70%" style="stop-color:#B8E986;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#9FD85A;stop-opacity:0.9" />
+                            </radialGradient>
                         </defs>
 
+                        <!-- Area fill under the curve -->
+                        <path class="graph-area" d="M 50 450 C 100 430 200 370 250 350 C 300 330 400 290 450 250 C 500 210 600 190 650 170 L 650 550 L 50 550 Z" />
+
                         <!-- Graph line connecting the peaks -->
-                        <path class="graph-line" d="M 100 400 Q 200 350 300 300 T 500 200 T 700 120 T 900 80" 
-                              stroke="url(#lineGradient)" />
+                        <path class="graph-line" d="M 50 450 C 100 430 200 370 250 350 C 300 330 400 290 450 250 C 500 210 600 190 650 170" />
 
                         <!-- Peak 1 -->
-                        <circle class="graph-point" cx="100" cy="400" r="8" />
-                        <text class="graph-label" x="100" y="380">1</text>
-                        <text class="placeholder-label" x="100" y="420">Placeholder 1</text>
+                        <g>
+                            <circle class="graph-point-outer" cx="50" cy="450" />
+                            <circle class="graph-point" cx="50" cy="450" r="12" />
+                            <text class="placeholder-label" x="50" y="380">Screening</text>
+                        </g>
 
                         <!-- Peak 2 -->
-                        <circle class="graph-point" cx="300" cy="300" r="8" />
-                        <text class="graph-label" x="300" y="280">2</text>
-                        <text class="placeholder-label" x="300" y="320">Placeholder 2</text>
+                        <g>
+                            <circle class="graph-point-outer" cx="250" cy="350" />
+                            <circle class="graph-point" cx="250" cy="350" r="12" />
+                            <text class="placeholder-label" x="250" y="280">Clinical Assessment</text>
+                        </g>
 
                         <!-- Peak 3 -->
-                        <circle class="graph-point" cx="500" cy="200" r="8" />
-                        <text class="graph-label" x="500" y="180">3</text>
-                        <text class="placeholder-label" x="500" y="220">Placeholder 3</text>
+                        <g>
+                            <circle class="graph-point-outer" cx="450" cy="250" />
+                            <circle class="graph-point" cx="450" cy="250" r="12" />
+                            <text class="placeholder-label" x="450" y="180">Psychiatry</text>
+                        </g>
 
                         <!-- Peak 4 -->
-                        <circle class="graph-point" cx="700" cy="120" r="8" />
-                        <text class="graph-label" x="700" y="100">4</text>
-                        <text class="placeholder-label" x="700" y="140">Placeholder 4</text>
-
-                        <!-- Peak 5 -->
-                        <circle class="graph-point" cx="900" cy="80" r="8" />
-                        <text class="graph-label" x="900" y="60">5</text>
-                        <text class="placeholder-label" x="900" y="100">Placeholder 5</text>
+                        <g>
+                            <circle class="graph-point-outer" cx="650" cy="170" />
+                            <circle class="graph-point" cx="650" cy="170" r="12" />
+                            <text class="placeholder-label" x="650" y="100">ADHD Assessment</text>
+                        </g>
                     </svg>
                 </div>
             </div>
