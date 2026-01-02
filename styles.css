@@ -364,3 +364,138 @@ html {
     outline: 3px solid var(--title-color);
     outline-offset: 2px;
 }
+
+/* Anmol Page Styles */
+.anmol-layout {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    align-items: flex-start;
+    max-width: 1400px;
+}
+
+.anmol-left {
+    flex: 1;
+    max-width: 600px;
+}
+
+.anmol-right {
+    flex: 1;
+    min-width: 400px;
+    max-width: 600px;
+}
+
+.anmol-image-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.anmol-image {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 12px;
+    object-fit: contain;
+    display: block;
+}
+
+.anmol-heading {
+    font-family: 'Jeko-Bold Regular', sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--title-color);
+    margin-bottom: 32px;
+    margin-top: 0;
+}
+
+.anmol-text {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+#my-cal-inline-15min {
+    min-height: 600px;
+    background: var(--white);
+    border-radius: 12px;
+}
+
+.anmol-text p {
+    font-family: 'Jeko-SemiBold Regular', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+    color: var(--description-color);
+    word-break: break-word;
+}
+
+@media (min-width: 810px) and (max-width: 1199px) {
+    .anmol-layout {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .anmol-left {
+        max-width: 100%;
+    }
+    
+    .anmol-right {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .anmol-heading {
+        font-size: 32px;
+    }
+    
+    .anmol-text p {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 809px) {
+    .anmol-layout {
+        flex-direction: column;
+        gap: 32px;
+    }
+    
+    .anmol-left {
+        max-width: 100%;
+    }
+    
+    .anmol-right {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .anmol-image-container {
+        margin-bottom: 32px;
+        justify-content: center;
+    }
+    
+    .anmol-image {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .anmol-heading {
+        font-size: 28px;
+        margin-bottom: 24px;
+    }
+    
+    .anmol-text {
+        gap: 24px;
+    }
+    
+    .anmol-text p {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+    
+    #my-cal-inline-15min {
+        min-height: 500px;
+    }
+}
