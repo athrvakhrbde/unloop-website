@@ -27,17 +27,17 @@
   --color-accent: #f4fec1;
   --color-cta: #009f3b;
   --color-cta-dark: #007f2f;
-  --color-surface: rgba(255, 255, 255, 0.04);
-  --color-border: rgba(255, 255, 255, 0.12);
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-border: rgba(255, 255, 255, 0.08);
 
   --font-family: "Jeko", system-ui, sans-serif;
-  --text-xs: 0.78rem;
+  --text-xs: 0.7rem;
   --text-sm: 0.95rem;
   --text-md: 1rem;
   --text-lg: 1.1rem;
   --text-xl: 1.35rem;
   --text-2xl: clamp(2rem, 3vw, 3rem);
-  --text-hero: clamp(2.4rem, 4.2vw, 4rem);
+  --text-hero: clamp(2.2rem, 3.8vw, 3.6rem);
 
   --space-1: 8px;
   --space-2: 12px;
@@ -45,8 +45,8 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 48px;
-  --space-7: 72px;
-  --space-8: 96px;
+  --space-7: 88px;
+  --space-8: 120px;
 
   --radius-sm: 10px;
   --radius-md: 16px;
@@ -79,9 +79,13 @@ img {
 }
 
 .container {
-  width: min(980px, 100%);
+  width: min(1024px, 100%);
   margin: 0 auto;
   padding: 0 clamp(20px, 6vw, 64px);
+}
+
+.narrow {
+  width: min(860px, 100%);
 }
 
 .section {
@@ -104,7 +108,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-4);
   padding: var(--space-4) clamp(20px, 6vw, 64px);
+  flex-wrap: nowrap;
 }
 
 .brand {
@@ -127,6 +133,7 @@ img {
   gap: var(--space-3);
   font-weight: 600;
   color: var(--color-muted);
+  margin-left: auto;
 }
 
 .site-nav a {
@@ -148,7 +155,7 @@ img {
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   color: var(--color-accent);
   font-size: var(--text-xs);
 }
@@ -170,7 +177,7 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-3);
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
   align-items: center;
 }
 
@@ -200,7 +207,7 @@ img {
 .offerings-inner {
   display: grid;
   gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .offer-card {
