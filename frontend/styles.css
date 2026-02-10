@@ -22,22 +22,22 @@
 
 :root {
   --color-bg: #26547c;
-  --color-surface: rgba(255, 255, 255, 0.06);
-  --color-border: rgba(255, 255, 255, 0.16);
   --color-text: #ffffff;
-  --color-muted: #f6f3ee;
+  --color-muted: rgba(255, 255, 255, 0.82);
   --color-accent: #f4fec1;
   --color-cta: #009f3b;
   --color-cta-dark: #007f2f;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(255, 255, 255, 0.12);
 
   --font-family: "Jeko", system-ui, sans-serif;
-  --text-xs: 0.8rem;
+  --text-xs: 0.78rem;
   --text-sm: 0.95rem;
   --text-md: 1rem;
   --text-lg: 1.1rem;
   --text-xl: 1.35rem;
-  --text-2xl: clamp(2.1rem, 3.2vw, 3.1rem);
-  --text-hero: clamp(2.6rem, 4.4vw, 4.1rem);
+  --text-2xl: clamp(2rem, 3vw, 3rem);
+  --text-hero: clamp(2.4rem, 4.2vw, 4rem);
 
   --space-1: 8px;
   --space-2: 12px;
@@ -62,7 +62,7 @@ body {
   font-family: var(--font-family);
   background-color: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -78,7 +78,7 @@ img {
 }
 
 .container {
-  width: min(1120px, 100%);
+  width: min(1040px, 100%);
   margin: 0 auto;
   padding: 0 8vw;
 }
@@ -143,7 +143,7 @@ img {
 
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   color: var(--color-accent);
   font-size: var(--text-xs);
 }
@@ -152,13 +152,13 @@ img {
   font-size: var(--text-hero);
   color: var(--color-accent);
   margin: var(--space-3) 0 var(--space-4);
-  line-height: 1.1;
+  line-height: 1.12;
 }
 
 .lead {
   font-size: var(--text-lg);
   color: var(--color-muted);
-  max-width: 560px;
+  max-width: 600px;
 }
 
 .hero-actions {
@@ -226,10 +226,10 @@ img {
 }
 
 .trust-inner {
-  border: 1px solid var(--color-border);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
+  border: 1px solid var(--color-border);
 }
 
 .trust-grid {
@@ -340,7 +340,7 @@ input, textarea, select {
   padding: 10px 12px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   color: var(--color-text);
   font-family: inherit;
 }
