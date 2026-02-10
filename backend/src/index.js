@@ -14,6 +14,12 @@ const app = express();
 app.disable("x-powered-by");
 app.set("trust proxy", 1);
 
+// Explicitly disable Topics API in modern browsers
+app.use((req, res, next) => {
+  res.setHeader("Permissions-Policy", "browsing-topics=()");
+  next();
+});
+
 app.use(helmet({
   contentSecurityPolicy: false
 }));
@@ -30,8 +36,10 @@ app.use(rateLimit({
 
 app.use(express.json({ limit: "1mb" }));
 
-// Public health check (no auth)
+// Public endpoints (no auth)
 app.get("/health", (req, res) => res.json({ ok: true }));
+app.get("/", (req, res) => res.json({ ok: true }));
+app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 // Auth & RBAC (high-level)
 app.use(requireAuth);
