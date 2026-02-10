@@ -1,66 +1,109 @@
-// Smooth scroll behavior
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize ticker animation
-    initTicker();
-    
-    // Add smooth scroll to buttons
-    initButtonLinks();
-});
+const apiBase = "/api";
 
-// Initialize ticker with seamless loop
-function initTicker() {
-    const tickerContent = document.querySelector('.ticker-content');
-    if (!tickerContent) return;
-    
-    // Clone the content for seamless loop
-    const originalContent = tickerContent.innerHTML;
-    tickerContent.innerHTML = originalContent + originalContent;
-    
-    // Reset animation if needed
-    const tickerElement = document.querySelector('.ticker');
-    if (tickerElement) {
-        tickerElement.style.animation = 'none';
-        setTimeout(() => {
-            tickerElement.style.animation = '';
-        }, 10);
-    }
-}
+async function submitForm(form, payload, endpoint) {
+  const statusEl = form.querySelector("[data-status]");
+  statusEl.textContent = "Submitting…";
 
-// Initialize button links
-function initButtonLinks() {
-    const buttons = document.querySelectorAll('.btn');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            // Add click animation
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        });
+  try {
+    const res = await fetch(`${apiBase}${endpoint}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
     });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || "Submission failed");
+
+    statusEl.textContent = "Thank you. We will reach out shortly.";
+    form.reset();
+  } catch (err) {
+    statusEl.textContent = err.message;
+  }
 }
 
-// Handle window resize for responsive adjustments
-let resizeTimer;
-window.addEventListener('resize', function() {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-        // Reinitialize ticker on resize if needed
-        const ticker = document.querySelector('.ticker');
-        if (ticker) {
-            ticker.style.animation = 'none';
-            setTimeout(() => {
-                ticker.style.animation = '';
-            }, 10);
-        }
-    }, 250);
+function getValue(form, name) {
+  const el = form.querySelector(`[name="${name}"]`);
+  return el ? el.value.trim() : "";
+}
+
+function tagsFromForm(form) {
+  const tags = [];
+  const urgency = getValue(form, "urgency");
+  const segment = getValue(form, "segment");
+  if (urgency) tags.push(`urgency_${urgency}`);
+  if (segment) tags.push(segment);
+  return tags;
+}
+
+function handleClientForm(form, extraTags = []) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (getValue(form, "website")) return;
+
+    const preferences = {
+      language: getValue(form, "language"),
+      session_type: getValue(form, "session_type")
+    };
+
+    const payload = {
+      name: getValue(form, "name"),
+      email: getValue(form, "email"),
+      phone: getValue(form, "phone"),
+      primary_concern: getValue(form, "primary_concern"),
+      budget_cents: Number(getValue(form, "budget")) * 100 || null,
+      preferences,
+      tags: [...tagsFromForm(form), ...extraTags],
+      notes: getValue(form, "notes")
+    };
+
+    submitForm(form, payload, "/public/clients");
+  });
+}
+
+function handleTherapistForm(form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (getValue(form, "website")) return;
+
+    const payload = {
+      name: getValue(form, "name"),
+      email: getValue(form, "email"),
+      phone: getValue(form, "phone"),
+      qualifications: getValue(form, "qualifications"),
+      specializations: getValue(form, "specializations"),
+      languages: getValue(form, "languages"),
+      fee_cents: Number(getValue(form, "fee")) * 100 || 0,
+      availability: getValue(form, "availability"),
+      experience_years: getValue(form, "experience"),
+      notes: getValue(form, "notes")
+    };
+
+    submitForm(form, payload, "/public/mhps");
+  });
+}
+
+function handleAdhdForm(form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (getValue(form, "website")) return;
+
+    const payload = {
+      name: getValue(form, "name"),
+      email: getValue(form, "email"),
+      phone: getValue(form, "phone"),
+      primary_concern: "ADHD Cohort",
+      preferences: {},
+      tags: ["adhd_cohort"],
+      notes: getValue(form, "notes")
+    };
+
+    submitForm(form, payload, "/public/clients");
+  });
+}
+
+document.querySelectorAll("form[data-form]").forEach((form) => {
+  const type = form.getAttribute("data-form");
+  if (type === "client") handleClientForm(form, ["looking_for_therapist"]);
+  if (type === "therapist") handleTherapistForm(form);
+  if (type === "adhd") handleAdhdForm(form);
 });
-
-// Prevent ticker animation issues on mobile
-if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const ticker = document.querySelector('.ticker');
-    if (ticker) {
-        ticker.style.animation = 'none';
-    }
-}

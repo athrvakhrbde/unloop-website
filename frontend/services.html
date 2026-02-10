@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unloop | Services</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Unloop home">
+      <img src="vector.svg" alt="" class="brand-mark" />
+      <span class="brand-name">Unloop</span>
+    </a>
+    <nav class="site-nav">
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a class="cta" href="#client-form">Find a Therapist</a>
+    </nav>
+  </header>
+
+  <main class="page">
+    <section class="page-hero">
+      <h1>Services</h1>
+      <p>Two focused offerings built for real outcomes: a therapist matching concierge, and a structured ADHD cohort.</p>
+    </section>
+
+    <section class="service-block">
+      <div>
+        <h2>Find Me a Therapist</h2>
+        <p>Share your needs, budget, and preferences. We shortlist the best‑fit mental health professional and coordinate the first session.</p>
+        <ul class="list">
+          <li>Tailored matching based on needs and constraints</li>
+          <li>Vetted therapists, psychologists, and psychiatrists</li>
+          <li>Follow‑ups to ensure a great fit</li>
+        </ul>
+        <div class="inline-actions">
+          <a class="button primary" href="#client-form">Looking for a therapist</a>
+          <a class="button ghost" href="#therapist-form">Join as a therapist</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <h3>What we ask for</h3>
+        <p>Primary concern, budget, preferences, and availability.</p>
+        <h3>What you get</h3>
+        <p>Shortlist + booking support with a verified professional.</p>
+      </div>
+    </section>
+
+    <section class="service-block">
+      <div>
+        <h2>ADHD Cohort</h2>
+        <p>A guided cohort experience for focus, accountability, and skill‑building. Weekly sessions, practical tools, and peer support.</p>
+        <ul class="list">
+          <li>Goal setting and progress tracking</li>
+          <li>Executive function support and routines</li>
+          <li>Structured accountability</li>
+        </ul>
+        <div class="inline-actions">
+          <a class="button primary" href="#adhd-form">Join ADHD cohort</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <h3>Format</h3>
+        <p>Weekly sessions with guided exercises and check‑ins.</p>
+        <h3>Who it’s for</h3>
+        <p>Adults seeking structured support for ADHD challenges.</p>
+      </div>
+    </section>
+
+    <section id="client-form" class="form-section">
+      <h2>Looking for a Therapist</h2>
+      <p>Fill the intake and we’ll match you with the right professional.</p>
+      <form class="form" data-form="client">
+        <div class="form-grid">
+          <label>Full name<input name="name" required /></label>
+          <label>Email<input name="email" type="email" required /></label>
+          <label>Phone<input name="phone" type="tel" required /></label>
+          <label>Primary concern<input name="primary_concern" required /></label>
+          <label>Budget (per session, in INR)<input name="budget" type="number" min="0" /></label>
+          <label>Preferred language<input name="language" /></label>
+          <label>Session preference<select name="session_type"><option value="online">Online</option><option value="offline">Offline</option><option value="either">Either</option></select></label>
+          <label>Urgency<select name="urgency"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
+          <label>Student or corporate<select name="segment"><option value="student">Student</option><option value="corporate">Corporate</option><option value="other">Other</option></select></label>
+          <label>Notes<textarea name="notes" rows="4"></textarea></label>
+          <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="button primary" type="submit">Submit intake</button>
+        <p class="form-status" data-status></p>
+      </form>
+    </section>
+
+    <section id="therapist-form" class="form-section">
+      <h2>Join as a Therapist</h2>
+      <p>Share your details and we’ll follow up with onboarding steps.</p>
+      <form class="form" data-form="therapist">
+        <div class="form-grid">
+          <label>Full name<input name="name" required /></label>
+          <label>Email<input name="email" type="email" required /></label>
+          <label>Phone<input name="phone" type="tel" required /></label>
+          <label>Qualifications<input name="qualifications" required /></label>
+          <label>Specializations (comma separated)<input name="specializations" required /></label>
+          <label>Languages (comma separated)<input name="languages" required /></label>
+          <label>Fee per session (INR)<input name="fee" type="number" min="0" required /></label>
+          <label>Availability<input name="availability" placeholder="Weekdays after 6pm" /></label>
+          <label>Years of experience<input name="experience" type="number" min="0" /></label>
+          <label>Notes<textarea name="notes" rows="4"></textarea></label>
+          <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="button primary" type="submit">Submit profile</button>
+        <p class="form-status" data-status></p>
+      </form>
+    </section>
+
+    <section id="adhd-form" class="form-section">
+      <h2>Join the ADHD Cohort</h2>
+      <p>Leave your details and we’ll share the next cohort schedule.</p>
+      <form class="form" data-form="adhd">
+        <div class="form-grid">
+          <label>Full name<input name="name" required /></label>
+          <label>Email<input name="email" type="email" required /></label>
+          <label>Phone<input name="phone" type="tel" required /></label>
+          <label>Goals / challenges<textarea name="notes" rows="4"></textarea></label>
+          <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <button class="button primary" type="submit">Join cohort</button>
+        <p class="form-status" data-status></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Unloop</strong>
+      <p>Human‑first mental health matching.</p>
+    </div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

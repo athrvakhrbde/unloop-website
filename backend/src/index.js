@@ -9,6 +9,7 @@ import { clientsRouter } from "./routes/clients.js";
 import { matchesRouter } from "./routes/matches.js";
 import { revenueRouter } from "./routes/revenue.js";
 import { mhpsRouter } from "./routes/mhps.js";
+import { publicRouter } from "./routes/public.js";
 
 const app = express();
 app.disable("x-powered-by");
@@ -42,6 +43,7 @@ app.get("/favicon.ico", (req, res) => res.status(204).end());
 
 // Public admin UI
 app.use(express.static("public"));
+app.use("/public", publicRouter);
 
 // Auth & RBAC (high-level)
 app.use(requireAuth);
