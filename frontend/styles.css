@@ -69,6 +69,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.container {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 0 8vw;
+}
+
+.section {
+  padding: var(--space-7) 0;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -135,7 +145,13 @@ img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--space-6);
-  padding: calc(var(--space-7) + 10px) 8vw var(--space-7);
+  padding: 0;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
 }
 
 .eyebrow {
@@ -194,7 +210,7 @@ img {
 }
 
 .offerings {
-  padding: 0 8vw var(--space-7);
+  padding: 0;
 }
 
 .offerings-inner {
@@ -223,7 +239,7 @@ img {
 }
 
 .trust {
-  padding: 0 8vw var(--space-7);
+  padding: 0;
 }
 
 .trust-inner {
@@ -240,7 +256,7 @@ img {
 }
 
 .page {
-  padding: var(--space-6) 8vw var(--space-7);
+  padding: 0;
 }
 
 .page-hero h1 {
@@ -366,7 +382,7 @@ textarea {
 }
 
 .site-footer {
-  padding: var(--space-5) 8vw var(--space-6);
+  padding: var(--space-5) 0 var(--space-6);
   border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: space-between;
