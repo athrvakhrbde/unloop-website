@@ -328,10 +328,41 @@ img {
   margin-top: var(--space-3);
 }
 
-.form-grid {
+.stepper {
   display: grid;
   gap: var(--space-3);
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.form-progress {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.form-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-accent);
+  transition: width 0.3s ease;
+}
+
+.form-step {
+  display: none;
+  gap: var(--space-3);
+}
+
+.form-step.active {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.form-nav {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: flex-end;
 }
 
 label {

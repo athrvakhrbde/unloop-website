@@ -107,3 +107,55 @@ document.querySelectorAll("form[data-form]").forEach((form) => {
   if (type === "therapist") handleTherapistForm(form);
   if (type === "adhd") handleAdhdForm(form);
 });
+
+document.querySelectorAll("form[data-stepper]").forEach((form) => {
+  const steps = Array.from(form.querySelectorAll("[data-step]"));
+  const progress = form.querySelector("[data-progress]");
+  const prevBtn = form.querySelector("[data-prev]");
+  const nextBtn = form.querySelector("[data-next]");
+  const submitBtn = form.querySelector("[data-submit]");
+  let current = 0;
+
+  const update = () => {
+    steps.forEach((step, idx) => {
+      step.classList.toggle("active", idx === current);
+    });
+    const pct = Math.round(((current + 1) / steps.length) * 100);
+    if (progress) progress.style.width = `${pct}%`;
+    if (prevBtn) prevBtn.style.display = current === 0 ? "none" : "inline-flex";
+    if (nextBtn) nextBtn.style.display = current === steps.length - 1 ? "none" : "inline-flex";
+    if (submitBtn) submitBtn.style.display = current === steps.length - 1 ? "inline-flex" : "none";
+  };
+
+  const canAdvance = () => {
+    const inputs = steps[current].querySelectorAll("input, select, textarea");
+    for (const input of inputs) {
+      if (!input.checkValidity()) {
+        input.reportValidity();
+        return false;
+      }
+    }
+    return true;
+  };
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (current > 0) {
+        current -= 1;
+        update();
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (!canAdvance()) return;
+      if (current < steps.length - 1) {
+        current += 1;
+        update();
+      }
+    });
+  }
+
+  update();
+});

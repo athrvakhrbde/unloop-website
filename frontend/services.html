@@ -77,21 +77,39 @@
       <section id="client-form" class="form-section section">
         <h2>Looking for a Therapist</h2>
         <p>Fill the intake and we’ll match you with the right professional.</p>
-        <form class="form" data-form="client">
-          <div class="form-grid">
+        <form class="form stepper" data-form="client" data-stepper>
+          <div class="form-progress">
+            <div class="form-progress-bar" data-progress></div>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Full name<input name="name" required /></label>
             <label>Email<input name="email" type="email" required /></label>
             <label>Phone<input name="phone" type="tel" required /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Primary concern<input name="primary_concern" required /></label>
             <label>Budget (per session, in INR)<input name="budget" type="number" min="0" /></label>
             <label>Preferred language<input name="language" /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Session preference<select name="session_type"><option value="online">Online</option><option value="offline">Offline</option><option value="either">Either</option></select></label>
             <label>Urgency<select name="urgency"><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select></label>
             <label>Student or corporate<select name="segment"><option value="student">Student</option><option value="corporate">Corporate</option><option value="other">Other</option></select></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Notes<textarea name="notes" rows="4"></textarea></label>
             <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
           </div>
-          <button class="button primary" type="submit">Submit intake</button>
+
+          <div class="form-nav">
+            <button class="button ghost" type="button" data-prev>Back</button>
+            <button class="button primary" type="button" data-next>Next</button>
+            <button class="button primary" type="submit" data-submit>Submit intake</button>
+          </div>
           <p class="form-status" data-status></p>
         </form>
       </section>
@@ -99,21 +117,39 @@
       <section id="therapist-form" class="form-section section">
         <h2>Join as a Therapist</h2>
         <p>Share your details and we’ll follow up with onboarding steps.</p>
-        <form class="form" data-form="therapist">
-          <div class="form-grid">
+        <form class="form stepper" data-form="therapist" data-stepper>
+          <div class="form-progress">
+            <div class="form-progress-bar" data-progress></div>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Full name<input name="name" required /></label>
             <label>Email<input name="email" type="email" required /></label>
             <label>Phone<input name="phone" type="tel" required /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Qualifications<input name="qualifications" required /></label>
             <label>Specializations (comma separated)<input name="specializations" required /></label>
             <label>Languages (comma separated)<input name="languages" required /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Fee per session (INR)<input name="fee" type="number" min="0" required /></label>
             <label>Availability<input name="availability" placeholder="Weekdays after 6pm" /></label>
             <label>Years of experience<input name="experience" type="number" min="0" /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Notes<textarea name="notes" rows="4"></textarea></label>
             <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
           </div>
-          <button class="button primary" type="submit">Submit profile</button>
+
+          <div class="form-nav">
+            <button class="button ghost" type="button" data-prev>Back</button>
+            <button class="button primary" type="button" data-next>Next</button>
+            <button class="button primary" type="submit" data-submit>Submit profile</button>
+          </div>
           <p class="form-status" data-status></p>
         </form>
       </section>
@@ -121,15 +157,27 @@
       <section id="adhd-form" class="form-section section">
         <h2>Join the ADHD Cohort</h2>
         <p>Leave your details and we’ll share the next cohort schedule.</p>
-        <form class="form" data-form="adhd">
-          <div class="form-grid">
+        <form class="form stepper" data-form="adhd" data-stepper>
+          <div class="form-progress">
+            <div class="form-progress-bar" data-progress></div>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Full name<input name="name" required /></label>
             <label>Email<input name="email" type="email" required /></label>
             <label>Phone<input name="phone" type="tel" required /></label>
+          </div>
+
+          <div class="form-step" data-step>
             <label>Goals / challenges<textarea name="notes" rows="4"></textarea></label>
             <input class="hidden" name="website" tabindex="-1" autocomplete="off" />
           </div>
-          <button class="button primary" type="submit">Join cohort</button>
+
+          <div class="form-nav">
+            <button class="button ghost" type="button" data-prev>Back</button>
+            <button class="button primary" type="button" data-next>Next</button>
+            <button class="button primary" type="submit" data-submit>Join cohort</button>
+          </div>
           <p class="form-status" data-status></p>
         </form>
       </section>
