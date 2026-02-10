@@ -194,11 +194,6 @@ img {
   background: transparent;
 }
 
-.link-subtle {
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
 .offerings {
   padding: 0;
 }
