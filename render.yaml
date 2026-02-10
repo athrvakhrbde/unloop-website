@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: unloop-backend
+    env: docker
+    rootDir: backend
+    dockerfilePath: backend/Dockerfile
+    plan: starter
+    autoDeploy: true
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8080
+      - key: DATABASE_URL
+        sync: false
+      - key: FIELD_ENCRYPTION_KEY_B64
+        sync: false
+      - key: HASH_PEPPER
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://0.unloop.in,https://www.unloop.in

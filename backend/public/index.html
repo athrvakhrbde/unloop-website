@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Unloop Admin Console</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --panel: #ffffff;
+      --text: #1d1d1b;
+      --muted: #5f5a52;
+      --accent: #1f6feb;
+      --border: #e7e2da;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Times New Roman", Georgia, serif;
+      background: radial-gradient(1200px 600px at 10% 0%, #fffdf7, var(--bg));
+      color: var(--text);
+    }
+    header {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--border);
+      background: #fffaf1;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    h1 { margin: 0; font-size: 24px; }
+    h2 { margin-top: 0; }
+    main { display: grid; gap: 18px; padding: 24px 28px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.04);
+    }
+    .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 6px; }
+    input, textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: 0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 12px;
+      border-radius: 8px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Unloop Admin Console</h1>
+  </header>
+  <main>
+    <section class="panel">
+      <h2>Auth</h2>
+      <div class="grid">
+        <div>
+          <label>Bearer Token</label>
+          <input id="token" placeholder="Paste JWT" />
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Create Client</h2>
+      <div class="grid">
+        <div><label>Name</label><input id="c_name" /></div>
+        <div><label>Email</label><input id="c_email" /></div>
+        <div><label>Phone</label><input id="c_phone" /></div>
+        <div><label>Contact Date (ISO)</label><input id="c_contact" placeholder="2026-02-10T10:00:00Z" /></div>
+        <div><label>Source</label><input id="c_source" /></div>
+        <div><label>Primary Concern</label><input id="c_concern" /></div>
+        <div><label>Budget (cents)</label><input id="c_budget" /></div>
+        <div><label>Preferences (JSON)</label><textarea id="c_prefs"></textarea></div>
+        <div><label>Tags (comma)</label><input id="c_tags" /></div>
+      </div>
+      <button onclick="createClient()">Create Client</button>
+    </section>
+
+    <section class="panel">
+      <h2>Create MHP</h2>
+      <div class="grid">
+        <div><label>Name</label><input id="m_name" /></div>
+        <div><label>Specializations (comma)</label><input id="m_specs" /></div>
+        <div><label>Languages (comma)</label><input id="m_langs" /></div>
+        <div><label>Fee (cents)</label><input id="m_fee" /></div>
+        <div><label>Revenue Share %</label><input id="m_share" /></div>
+        <div><label>Availability (JSON)</label><textarea id="m_avail"></textarea></div>
+      </div>
+      <button onclick="createMhp()">Create MHP</button>
+    </section>
+
+    <section class="panel">
+      <h2>Create Match</h2>
+      <div class="grid">
+        <div><label>Client ID</label><input id="match_client" /></div>
+        <div><label>MHP ID</label><input id="match_mhp" /></div>
+        <div><label>Status</label><input id="match_status" placeholder="pending" /></div>
+      </div>
+      <button onclick="createMatch()">Create Match</button>
+    </section>
+
+    <section class="panel">
+      <h2>Update Match Status</h2>
+      <div class="grid">
+        <div><label>Match ID</label><input id="ms_id" /></div>
+        <div><label>To Status</label><input id="ms_to" /></div>
+        <div><label>Reason</label><input id="ms_reason" /></div>
+      </div>
+      <button onclick="updateMatchStatus()">Update Status</button>
+    </section>
+
+    <section class="panel">
+      <h2>Revenue Entry</h2>
+      <div class="grid">
+        <div><label>Client ID</label><input id="r_client" /></div>
+        <div><label>MHP ID</label><input id="r_mhp" /></div>
+        <div><label>Session Date</label><input id="r_date" placeholder="2026-02-10" /></div>
+        <div><label>Client Paid (cents)</label><input id="r_paid" /></div>
+      </div>
+      <button onclick="createRevenue()">Create Revenue</button>
+    </section>
+
+    <section class="panel">
+      <h2>Output</h2>
+      <pre id="output">Ready</pre>
+    </section>
+  </main>
+
+  <script>
+    const api = (path) => `/${path.replace(/^\//, "")}`;
+    const headers = () => ({
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${document.getElementById("token").value.trim()}`
+    });
+
+    function setOut(data) {
+      document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function createClient() {
+      const body = {
+        name: document.getElementById("c_name").value,
+        email: document.getElementById("c_email").value,
+        phone: document.getElementById("c_phone").value,
+        contact_date: document.getElementById("c_contact").value,
+        source: document.getElementById("c_source").value,
+        primary_concern: document.getElementById("c_concern").value,
+        budget_cents: Number(document.getElementById("c_budget").value || 0),
+        preferences: JSON.parse(document.getElementById("c_prefs").value || "{}"),
+        tags: (document.getElementById("c_tags").value || "").split(",").map(s => s.trim()).filter(Boolean)
+      };
+      const res = await fetch(api("clients"), { method: "POST", headers: headers(), body: JSON.stringify(body) });
+      setOut(await res.json());
+    }
+
+    async function createMhp() {
+      const body = {
+        name: document.getElementById("m_name").value,
+        specializations: (document.getElementById("m_specs").value || "").split(",").map(s => s.trim()).filter(Boolean),
+        languages: (document.getElementById("m_langs").value || "").split(",").map(s => s.trim()).filter(Boolean),
+        fee_cents: Number(document.getElementById("m_fee").value || 0),
+        revenue_share_pct: Number(document.getElementById("m_share").value || 0),
+        availability: JSON.parse(document.getElementById("m_avail").value || "{}")
+      };
+      const res = await fetch(api("mhps"), { method: "POST", headers: headers(), body: JSON.stringify(body) });
+      setOut(await res.json());
+    }
+
+    async function createMatch() {
+      const body = {
+        client_id: document.getElementById("match_client").value,
+        mhp_id: document.getElementById("match_mhp").value,
+        status: document.getElementById("match_status").value || "pending"
+      };
+      const res = await fetch(api("matches"), { method: "POST", headers: headers(), body: JSON.stringify(body) });
+      setOut(await res.json());
+    }
+
+    async function updateMatchStatus() {
+      const id = document.getElementById("ms_id").value;
+      const body = {
+        to_status: document.getElementById("ms_to").value,
+        reason: document.getElementById("ms_reason").value || null
+      };
+      const res = await fetch(api(`matches/${id}/status`), { method: "PUT", headers: headers(), body: JSON.stringify(body) });
+      setOut(await res.json());
+    }
+
+    async function createRevenue() {
+      const body = {
+        client_id: document.getElementById("r_client").value,
+        mhp_id: document.getElementById("r_mhp").value,
+        session_date: document.getElementById("r_date").value,
+        client_paid_cents: Number(document.getElementById("r_paid").value || 0)
+      };
+      const res = await fetch(api("revenue"), { method: "POST", headers: headers(), body: JSON.stringify(body) });
+      setOut(await res.json());
+    }
+  </script>
+</body>
+</html>
