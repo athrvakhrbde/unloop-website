@@ -38,8 +38,10 @@ app.use(express.json({ limit: "1mb" }));
 
 // Public endpoints (no auth)
 app.get("/health", (req, res) => res.json({ ok: true }));
-app.get("/", (req, res) => res.json({ ok: true }));
 app.get("/favicon.ico", (req, res) => res.status(204).end());
+
+// Public admin UI
+app.use(express.static("public"));
 
 // Auth & RBAC (high-level)
 app.use(requireAuth);
@@ -49,8 +51,6 @@ app.use("/clients", requireRole("admin", "ops"), clientsRouter);
 app.use("/mhps", requireRole("admin", "ops"), mhpsRouter);
 app.use("/matches", requireRole("admin", "ops"), matchesRouter);
 app.use("/revenue", requireRole("admin", "finance"), revenueRouter);
-
-app.use(express.static("public"));
 
 const port = Number(process.env.PORT || 8080);
 app.listen(port, () => {
