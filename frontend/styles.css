@@ -45,8 +45,8 @@
   --space-4: 24px;
   --space-5: 32px;
   --space-6: 48px;
-  --space-7: 80px;
-  --space-8: 110px;
+  --space-7: 72px;
+  --space-8: 96px;
 
   --radius-sm: 10px;
   --radius-md: 16px;
@@ -81,7 +81,7 @@ img {
 .container {
   width: min(980px, 100%);
   margin: 0 auto;
-  padding: 0 8vw;
+  padding: 0 clamp(20px, 6vw, 64px);
 }
 
 .section {
@@ -104,7 +104,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) 8vw;
+  padding: var(--space-4) clamp(20px, 6vw, 64px);
 }
 
 .brand {
